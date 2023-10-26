@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reviews</title>
 
- <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -16,103 +16,73 @@
             background-color: #f8f8f8;
         }
 
-        #reviews {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 80%;
-        }
-
-        .review-box {
-            background-color: orange;
-            border: 1px solid #ccc;
+        .login-container {
+            background-color: white;
+            padding: 40px;
             border-radius: 8px;
-            padding: 20px;
-            margin: 20px;
-            width: 100%;
-            max-width: 600px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
         }
 
-        .review-header {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 10px;
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
-        .review-details {
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-container button {
+            padding: 10px 20px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
             font-size: 16px;
-            margin-bottom: 10px;
-            color: #333;
+        }
+
+        .login-container button:hover {
+            background-color: #d9750f;
         }
     </style>
-
-
-
-
-
 </head>
+
 <body>
 
-<div id="reviews"></div>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form onsubmit="return checkLogin()">
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script>
+        function checkLogin() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
 
-<script>
-// Firebase configuration
-const firebaseConfig = {
- apiKey: "AIzaSyC2n4YVYG42Z07U0loqvtW4QcT7EdDbzVM",
-            authDomain: "alquds-view.firebaseapp.com",
-            databaseURL: "https://alquds-view-default-rtdb.firebaseio.com",
-            projectId: "alquds-view",
-            storageBucket: "alquds-view.appspot.com",
-            messagingSenderId: "272107325033",
-            appId: "1:272107325033:web:5fa1e04aa61a9ab60944f8",
-            measurementId: "G-FN8YSC0NL1"
-        };
-		
-// Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-  // Reference to your database
-  var dbRef = firebase.database().ref('reviews');
-
-  // Get element to display reviews
-  var reviewsElement = document.getElementById('reviews');
-
-  // Listen for new reviews and update the page
-  dbRef.on('value', (snapshot) => {
-    var reviews = snapshot.val();
-    var allReviews = '';
-    for(var review in reviews){
-        allReviews += '<p>' + reviews[review].reviewText + '</p>';
-    }
-    reviewsElement.innerHTML = allReviews;
-  });
-  
-  // Listen for new reviews and update the page
-dbRef.on('value', (snapshot) => {
-  var reviews = snapshot.val();
-  var allReviews = '';
-  
-  for (var reviewKey in reviews) {
-    var review = reviews[reviewKey];
-    allReviews += '<div style="margin-bottom: 20px;">';
-    allReviews += '<h3>Review:</h3>';
-    allReviews += '<p>Floor Number: ' + (review.floorNumber || 'N/A') + '</p>';
-    allReviews += '<p>Rating: ' + (review.rating || 'N/A') + '</p>';
-    allReviews += '<p>Review Text: ' + (review.reviewText || 'N/A') + '</p>';
-    allReviews += '<p>Table Number: ' + (review.tableNumber || 'N/A') + '</p>';
-    allReviews += '<p>Timestamp: ' + (review.timestamp || 'N/A') + '</p>';
-    allReviews += '</div>';
-  }
-  
-  reviewsElement.innerHTML = allReviews;
-});
-  
-</script>
+            // Replace 'admin' and 'password' with your own credentials
+            if (username === 'admin' && password === 'password') {
+                window.location.href = 'feedback.html'; // Redirect to your reviews page
+                return false;
+            } else {
+                alert('Invalid login credentials');
+                return false;
+            }
+        }
+    </script>
 
 </body>
+
 </html>
